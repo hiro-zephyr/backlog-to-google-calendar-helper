@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "Backlog to Google Calendar Helper for Edge",
+  "version": "0.6.1",
+  "description": "Backlog課題をGoogleカレンダーの予定またはタスクへ登録するWindows 11 / Microsoft Edge向け拡張機能です。",
+  "permissions": [
+    "storage",
+    "tabs",
+    "clipboardWrite",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.backlog.com/*",
+    "https://*.backlog.jp/*",
+    "https://calendar.google.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Backlog → Google Calendar / Tasks"
+  },
+  "commands": {
+    "open-backlog-to-task": {
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      },
+      "description": "Backlog課題をGoogle Tasksへ登録"
+    },
+    "open-backlog-to-calendar": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "Backlog課題をGoogleカレンダー予定へ登録"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.backlog.com/view/*",
+        "https://*.backlog.jp/view/*"
+      ],
+      "js": [
+        "content-backlog.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://calendar.google.com/*"
+      ],
+      "js": [
+        "content-calendar.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
